@@ -11,3 +11,4 @@ eq1: x^(2)+(y-nroot(x^(2),3))^(2)=2
 
 Screenshot: <br>
 
+![2024-06-02 12_31_07-Window](https://github.com/CristianoSword/DrawHeart/assets/16153844/44cf7310-0b58-4aae-be76-aa0d3343d91a)
