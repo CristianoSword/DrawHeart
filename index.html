@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Animation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="graph" width="800" height="800"></canvas>
+    <script>
+        const canvas = document.getElementById('graph');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const scale = 100; // Scale factor for better visualization
+        const step = 0.01; // Step for angle increment
+        let theta = 2 * Math.PI; // Start from 2 * PI for anti-clockwise
+        const speed = 1; // Speed multiplier for the animation
+
+        function drawPoint(x, y) {
+            const canvasX = width / 2 + x * scale;
+            const canvasY = height / 2 - y * scale;
+            ctx.fillRect(canvasX, canvasY, 2, 2);
+        }
+
+        function drawGraph() {
+            if (theta >= 0) {
+                // Convert polar coordinates to Cartesian coordinates
+                const r = Math.sqrt(2);
+                const x = r * Math.cos(theta);
+                const cubeRoot = Math.cbrt(x * x);
+                const sqrtTerm = Math.sqrt(2 - x * x);
+
+                // Calculate the y value
+                const y = cubeRoot + Math.sign(Math.sin(theta)) * sqrtTerm;
+
+                // Draw the point
+                drawPoint(x, y);
+
+                // Decrement theta for the next point in anti-clockwise direction
+                theta -= step * speed;
+
+                // Request next frame
+                requestAnimationFrame(drawGraph);
+            }
+        }
+
+        // Clear canvas and draw axes
+        function initCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw x and y axes
+            ctx.beginPath();
+            ctx.moveTo(width / 2, 0);
+            ctx.lineTo(width / 2, height);
+            ctx.moveTo(0, height / 2);
+            ctx.lineTo(width, height / 2);
+            ctx.strokeStyle = '#000';
+            ctx.stroke();
+        }
+
+        initCanvas();
+        drawGraph();
+    </script>
+</body>
+</html>
